@@ -1,20 +1,21 @@
 <template>
-  <div class=" container">
-    <TodoForm @add="addTodo" v-if="showForm" />
+  <div class="home-page container">
+    <listForm @add="addList" v-if="showForm" />
     <button type="button" class="btn btn-primary mt-3 mx-auto" @click="addForm">
-      ایجاد کار جدید
+      ایجاد لیست جدید
     </button>
     <div class="d-flex flex-column flex-md-row">
       <div class="form-group mt-3">
         <label> فیلتر بر اساس:</label>
-        <Field v-model="filter" as="select" class="form-control">
+        <Field v-model="filter" as="select" name="filter" class="form-control">
           <option value=""></option>
           <option value="title">عنوان</option>
-          <option value="date">تاریخ</option>
-          <option value="priorate">اولویت</option>
+          <option value="dueDate">تاریخ</option>
+          <option value="priority">اولویت</option>
         </Field>
-
-        <Field v-model="priority" v-if="filter == 'priorate'" as="select" class="mt-2 form-control">
+        <Field v-if="filter == 'title'" v-model="filterItem" name="description" type="text" class="form-control" />
+        <Field v-if="filter == 'dueDate'" v-model="filterItem" name="dueDate" type="date" class="form-control" />
+        <Field v-model="filterItem" v-if="filter == 'priority'" as="select" class="mt-2 form-control">
           <option value=""></option>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
@@ -27,36 +28,35 @@
         <Field v-model="search" name="description" type="text" class="form-control" />
       </div>
     </div>
-
-    <ul class="mt-3 d-flex flex-wrap mx-0 px-0">
-      <TodoCard v-for="(todo, index) in todos" :key="index" :todo="todo" @delete="deleteTodo(index)" class="mt-3 mx-3" />
-    </ul>
+    <div class="d-flex scroll-lists" style="overflow-x: auto;">
+      <todoList v-for="(todo, index) in todos" :key="index+'-todos'" :index="index" :todos="todo"></todoList>
+    </div>
   </div>
 </template>
 
 <script>
 import { useTodoStore } from '@/store/index.js'
-import TodoCard from '@/components/todoCard.vue'
-import TodoForm from '@/components/todoForm.vue'
-import { ref, watch } from 'vue'
+import listForm from '@/components/listForm.vue'
+import todoList from '@/components/todoList.vue'
+import { ref } from 'vue'
 import { Field } from 'vee-validate'
 
 export default {
   components: {
-    TodoCard,
     Field,
-    TodoForm
+    listForm,
+    todoList
   },
   setup () {
     const todoStore = useTodoStore()
     const showForm = ref(false)
-    const priority = ref('')
+    const filterItem = ref('')
     const filter = ref('')
     const search = ref('')
-    const todos = ref(todoStore.todos)
+    const todos = ref(todoStore.list)
 
-    const addTodo = (todo) => {
-      todoStore.addTodo(todo)
+    const addList = (todo) => {
+      todoStore.addList(todo)
       showForm.value = false
     }
 
@@ -68,23 +68,28 @@ export default {
       todoStore.deleteTodo(index)
     }
 
-    const filteredTodosPriority = () => {
-      if (priority.value) return todoStore.todos.filter(todo => todo.priority === priority.value)
-      else return todoStore.todos
-    }
+    // const filteredTodosPriority = () => {
+    //   if (filterItem.value) {
+    //     return todoStore.todos.filter(todo => todo[filter.value] === filterItem.value || todo[filter.value].includes(filterItem.value))
+    //   } else return todoStore.todos
+    // }
 
-    watch(priority, () => {
-      todos.value = filteredTodosPriority()
-    })
+    // watch(filterItem, () => {
+    //   todos.value = filteredTodosPriority()
+    // })
+
+    // watch(filter, () => {
+    //   todos.value = todoStore.todos
+    //   filterItem.value = ''
+    // })
 
     return {
       todoStore,
-      addTodo,
+      addList,
       todos,
-      priority,
+      filterItem,
       filter,
       search,
-      filteredTodosPriority,
       showForm,
       addForm,
       deleteTodo
@@ -93,16 +98,43 @@ export default {
 }
 </script>
 
-<style>
-.form-group {
-  width: 40%;
-}
-button.btn-primary {
-  margin-bottom: 20px;
-}
+<style lang="scss">
+.scroll-lists {
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+  }
 
-ul.list-group {
-  margin-top: 20px;
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #adadad;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #949494;
+    border-radius: 10px;
+  }
+}
+.home-page {
+  .form-group {
+    width: 40%;
+  }
+  button.btn-primary {
+    margin-bottom: 20px;
+  }
+
+  ul.list-group {
+    margin-top: 20px;
+  }
 }
 
 </style>

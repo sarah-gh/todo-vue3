@@ -1,5 +1,5 @@
 <template>
-  <div class="card m-3">
+  <div class="card m-3 todo-form">
     <h5 class="card-header">Create New Todo Item</h5>
     <div class="card-body">
       <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
@@ -53,8 +53,17 @@ const schema = Yup.object().shape({
 })
 
 function onSubmit (values) {
-  // Process form submission
-  // emit add functionality values
   emit('add', values)
 }
 </script>
+
+<style lang="scss" scoped>
+.card {
+  width: 90%;
+}
+.todo-form {
+  .form-group {
+    width: 100% !important;
+  }
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-3 p-3 bg-light rounded shadow todo-card">
+  <div class="card mb-3 p-3 rounded shadow todo-card"  :class="{'dark': isDarkMode}">
     <h3 class="text-lg todo-title">عنوان : {{ todo.title }}</h3>
     <p class="todo-description">توضیحات : {{ todo.description }}</p>
     <p class="todo-due-date">تاریخ سررسید : {{ todo.dueDate }}</p>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { inject } from 'vue'
+
 export default {
   props: {
     todo: {
@@ -20,6 +22,8 @@ export default {
     }
   },
   setup (props) {
+    const isDarkMode = inject('isDarkMode')
+
     const editTodo = () => {
       // عملیات ویرایش کار
     }
@@ -29,6 +33,7 @@ export default {
     }
 
     return {
+      isDarkMode,
       editTodo,
       deleteTodo
     }
@@ -38,7 +43,7 @@ export default {
 
 <style scoped>
 .todo-card {
-  width: 30%;
+  width: 90%;
   margin-bottom: 1rem;
   padding: 1rem;
   direction: rtl;

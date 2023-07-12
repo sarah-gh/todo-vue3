@@ -142,3 +142,31 @@ $font-default-5: 100% 'iranyekan' !important;
   }
 }
 
+:root {
+  font-size: 16px;
+  font-family: "Open Sans";
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #23232e;
+  --bg-secondary: #141418;
+  --transition-speed: 400ms;
+}
+
+.dark {
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #23232e;
+  --bg-secondary: #141418;
+}
+
+.light {
+  --text-primary: #1f1f1f;
+  --text-secondary: #000000;
+  --bg-primary: #ffffff;
+  --bg-secondary: #e4e4e4;
+}
+
+body {
+  background-color: var(--background-color); /* استفاده از متغیر رنگ پس زمینه */
+  color: var(--text-color); /* استفاده از متغیر رنگ متن */
+}

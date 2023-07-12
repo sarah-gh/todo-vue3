@@ -21,6 +21,7 @@ import { useTodoStore } from '@/store/index.js'
 import { ref } from 'vue'
 
 export default {
+  name: 'todoList',
   props: {
     todos: {
       type: Object

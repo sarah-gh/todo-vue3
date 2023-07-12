@@ -5,17 +5,29 @@
       ایجاد لیست جدید
     </button>
     <div class="card pb-3 px-3 d-flex flex-column flex-md-row">
-      <div class="form-group mt-3">
-        <label> فیلتر بر اساس:</label>
-        <Field v-model="filter" as="select" name="filter" class="form-control">
+      <div class="form-group mt-3 mx-1">
+        <label> فیلتر روی: </label>
+        <Field v-model="selectList" as="select" name="filter" class="form-control">
+          <option value=""></option>
+          <option v-for="(list, index) in todoStore.list" :key="'option-'+index" :value="'option-'+index">{{ list.title }} (لیست {{ index+1 }} ام)</option>
+        </Field>
+      </div>
+
+      <div class="form-group mt-3 mx-1">
+        <label v-if="selectList"> فیلتر بر اساس:</label>
+        <Field v-if="selectList" v-model="filter" as="select" name="filter" class="form-control">
           <option value=""></option>
           <option value="title">عنوان</option>
           <option value="dueDate">تاریخ</option>
           <option value="priority">اولویت</option>
         </Field>
-        <Field v-if="filter == 'title'" v-model="filterItem" name="description" type="text" class="form-control" />
-        <Field v-if="filter == 'dueDate'" v-model="filterItem" name="dueDate" type="date" class="form-control" />
-        <Field v-model="filterItem" v-if="filter == 'priority'" as="select" class="mt-2 form-control">
+      </div>
+
+      <div class="form-group mt-3 mx-1">
+        <label v-if="selectList && filter"> فیلتر:</label>
+        <Field v-if="selectList && filter == 'title'"    v-model="filterItem" name="description" type="text" class="form-control" />
+        <Field v-if="selectList && filter == 'dueDate'"  v-model="filterItem" name="dueDate" type="date" class="form-control" />
+        <Field v-if="selectList && filter == 'priority'" v-model="filterItem" as="select" class="mt-2 form-control">
           <option value=""></option>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
@@ -23,10 +35,10 @@
         </Field>
       </div>
 
-      <div class="form-group mt-3 mx-0 mx-md-4">
+      <!-- <div class="form-group mt-3 mx-0 mx-md-4">
         <label> جستجو :</label>
         <Field v-model="search" name="description" type="text" class="form-control" />
-      </div>
+      </div> -->
     </div>
     <div class="d-flex scroll-lists" style="overflow-x: auto;">
       <todoList v-for="(todo, index) in todos" :key="index+'-todos'" :index="index" :todos="todo"></todoList>
@@ -38,7 +50,7 @@
 import { useTodoStore } from '@/store/index.js'
 import listForm from '@/components/listForm.vue'
 import todoList from '@/components/todoList.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Field } from 'vee-validate'
 
 export default {
@@ -51,9 +63,10 @@ export default {
     const todoStore = useTodoStore()
     const showForm = ref(false)
     const filterItem = ref('')
+    const selectList = ref('')
     const filter = ref('')
     const search = ref('')
-    const todos = ref(todoStore.list)
+    const todos = ref(JSON.parse(JSON.stringify(todoStore.list)))
 
     const addList = (todo) => {
       todoStore.addList(todo)
@@ -61,7 +74,7 @@ export default {
     }
 
     const addForm = () => {
-      showForm.value = true
+      showForm.value = !showForm.value
     }
 
     const deleteTodo = (index) => {
@@ -69,23 +82,50 @@ export default {
     }
 
     // const filteredTodosPriority = () => {
-    //   if (filterItem.value) {
-    //     return todoStore.todos.filter(todo => todo[filter.value] === filterItem.value || todo[filter.value].includes(filterItem.value))
-    //   } else return todoStore.todos
+    //   const index = selectList.value.split('-')[1]
+    //   if (filterItem.value && todoStore.list[index].todos) {
+    //     console.log(todoStore.list[index], filter.value, todoStore.list[index].todos)
+    //     return todoStore.list[index].todos.filter(
+    //       todo => todo[filter.value] === filterItem.value || todo[filter.value].includes(filterItem.value)
+    //     )
+    //   } else return todoStore.list[index]
     // }
+    const filteredTodosPriority = () => {
+      const index = selectList.value.split('-')[1]
+      if (filterItem.value && todoStore.list[index].todos) {
+        console.log('if:', todoStore.list[index].todos)
+        return todoStore.list[index].todos.filter(
+          todo => todo[filter.value] === filterItem.value || todo[filter.value].includes(filterItem.value)
+        )
+      } else {
+        console.log('else', todoStore.list[index].todos)
+        return JSON.parse(JSON.stringify(todoStore.list[index].todos))
+      }
+    }
 
-    // watch(filterItem, () => {
-    //   todos.value = filteredTodosPriority()
-    // })
+    watch(selectList, () => {
+      if (selectList.value) {
+        const index = selectList.value.split('-')[1]
+        console.log('selectList.value', selectList.value, [todoStore.list[index]])
+        todos.value = JSON.parse(JSON.stringify([todoStore.list[index]]))
+      } else {
+        todos.value = JSON.parse(JSON.stringify(todoStore.list))
+      }
+    })
 
-    // watch(filter, () => {
-    //   todos.value = todoStore.todos
-    //   filterItem.value = ''
-    // })
+    watch(filterItem, () => {
+      todos.value[0].todos = filteredTodosPriority()
+    })
+
+    watch(filter, () => {
+      todos.value = JSON.parse(JSON.stringify([todoStore.list[selectList.value.split('-')[1]]]))
+      filterItem.value = ''
+    })
 
     return {
       todoStore,
       addList,
+      selectList,
       todos,
       filterItem,
       filter,

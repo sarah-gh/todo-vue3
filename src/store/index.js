@@ -16,13 +16,13 @@ export const useTodoStore = defineStore('todo', {
         todos: [{ title: 'کار 2', description: 'یبرتاذ', dueDate: '2023-07-13', priority: 'Low' }, { title: 'کار 5', description: 'dfjhbjhfv', dueDate: '2023-07-13', priority: 'Medium' }, { title: 'oere', description: 'df jhbjhfvsd  sdfihbevc', dueDate: '2023-07-13', priority: 'High' }]
       },
       {
-        title: 'لیست دوم',
+        title: 'لیست سوم',
         date: '2/12/2023',
         description: 'تست تست تست ',
         todos: [{ title: 'کار 3', description: 'یبرتاذ', dueDate: '2023-07-13', priority: 'Low' }, { title: 'کار 6', description: 'dfjhbjhfv', dueDate: '2023-07-13', priority: 'Medium' }, { title: 'oere', description: 'df jhbjhfvsd  sdfihbevc', dueDate: '2023-07-13', priority: 'High' }]
       },
       {
-        title: 'لیست دوم',
+        title: 'لیست چهارم',
         date: '2/12/2023',
         description: 'تست تست تست ',
         todos: [{ title: 'بتاذبیتارذ', description: 'یبرتاذ', dueDate: '2023-07-13', priority: 'Low' }, { title: 'fdhfv', description: 'dfjhbjhfv', dueDate: '2023-07-13', priority: 'Medium' }, { title: 'oere', description: 'df jhbjhfvsd  sdfihbevc', dueDate: '2023-07-13', priority: 'High' }]

@@ -1,5 +1,5 @@
 <template>
-    <div class="todo-list card my-4 p-1 bg-light rounded mx-2">
+    <div class="todo-list card my-4 p-1 rounded mx-2">
       <TodoForm @add="addTodo" v-if="showForm" />
       <button type="button" class="btn btn-primary mt-3 mx-auto" @click="addForm">
         ایجاد کار جدید

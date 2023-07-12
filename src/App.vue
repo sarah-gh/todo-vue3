@@ -1,6 +1,6 @@
 <template>
-  <div class="app" dir="rtl" data-bs-theme="light">
-    <button @click="toggleTheme">تغییر تم</button>
+  <div class="app" dir="rtl" :data-bs-theme="theme">
+    <button @click="toggleTheme" class="btn">تغییر تم</button>
     <router-view />
   </div>
 </template>
@@ -12,12 +12,9 @@ export default {
   name: 'app',
 
   setup () {
-    // const isDarkMode = inject('isDarkMode')
-    // const toggleTheme = inject('toggleTheme')
-
     const themeMap = {
-      dark: 'light',
-      light: 'dark'
+      light: 'dark',
+      dark: 'light'
     }
 
     let tmp
@@ -42,8 +39,6 @@ export default {
       bodyClass.replace(themeMap[newVal], newVal)
     })
 
-    // export { theme, toggleTheme }
-
     return {
       theme,
       toggleTheme,
@@ -51,5 +46,10 @@ export default {
     }
   }
 }
-
 </script>
+
+<style>
+.app {
+  background-color: var(--bs-body-bg);
+}
+</style>

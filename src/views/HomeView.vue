@@ -4,7 +4,7 @@
     <button type="button" class="btn btn-primary mt-3 mx-auto" @click="addForm">
       ایجاد لیست جدید
     </button>
-    <div class="d-flex flex-column flex-md-row">
+    <div class="card pb-3 px-3 d-flex flex-column flex-md-row">
       <div class="form-group mt-3">
         <label> فیلتر بر اساس:</label>
         <Field v-model="filter" as="select" name="filter" class="form-control">

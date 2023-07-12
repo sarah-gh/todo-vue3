@@ -40,8 +40,8 @@ export const useTodoStore = defineStore('todo', {
       console.log(indexList, indexTodo)
       this.list[indexList].todos.splice(indexTodo, 1)
     },
-    editTodo (index, updatedTodo) {
-      // this.todos.splice(index, 1, updatedTodo)
+    editTodo (indexList, indexTodo, updatedTodo) {
+      this.list[indexList].todos.splice(indexTodo, 1, updatedTodo)
     }
   }
 })

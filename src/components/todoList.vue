@@ -1,6 +1,6 @@
 <template>
     <div class="todo-list card my-4 p-1 rounded mx-2">
-      <TodoForm @add="addTodo" v-if="showForm" />
+      <TodoForm @add="addTodo" v-if="showForm" :initialValues="initialValues"/>
       <div class="px-2">
         <div class="d-flex mt-3 ">
           <button type="button" class="btn btn-primary" @click="addForm">
@@ -15,7 +15,7 @@
         <p class="todo-due-date">تاریخ ایجاد : {{ todos.date }}</p>
       </div>
       <div class="mt-3 mx-0 px-0">
-          <TodoCard v-for="(todo, index) in todos.todos" :key="index"
+          <TodoCard v-for="(todo, index) in todos.todos" :key="index" @addTodo="addTodo"
           :todo="todo" @deleteTodo="deleteTodo(index)" @editTodo="editTodo(index)" class="mt-3 mx-3" />
       </div>
     </div>
@@ -46,6 +46,10 @@ export default {
     const todoStore = useTodoStore()
     // const todos = ref(todoStore.list[props.index])
     const showForm = ref(false)
+    const showEditForm = ref(false)
+    const mode = ref('add')
+    const editIndex = ref(-1)
+    const initialValues = ref({})
 
     const show = () => {
 
@@ -57,23 +61,39 @@ export default {
     }
 
     const editTodo = (index) => {
-
+      mode.value = 'edit'
+      showEditForm.value = true
+      editIndex.value = index
+      console.log('editTodo', index, props.todos.todos[index])
+      initialValues.value = props.todos.todos[index]
     }
 
     const addForm = () => {
-      showForm.value = true
+      mode.value = 'add'
+      showForm.value = !showForm.value
+      initialValues.value = {}
     }
 
     const addTodo = (todo) => {
-      todoStore.addTodo(todo, props.index)
-      showForm.value = false
+      if (mode.value === 'add') {
+        todoStore.addTodo(todo, props.index)
+        showForm.value = false
+      } else {
+        todoStore.editTodo(props.index, editIndex.value, todo)
+        showForm.value = false
+      }
+      initialValues.value = {}
     }
 
     return {
       show,
       deleteTodo,
+      showEditForm,
       editTodo,
       addForm,
+      editIndex,
+      mode,
+      initialValues,
       showForm,
       addTodo
     }

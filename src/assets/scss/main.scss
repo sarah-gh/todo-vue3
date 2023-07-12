@@ -1,0 +1,144 @@
+@import url(./font.scss);
+
+$font: IRANSans !important;
+
+.v-application,
+body {
+	font-family: $font;
+	overflow-x: hidden;
+}
+
+.v-application {
+  .input-form{
+    .error {
+      background-color: #cccccc00 !important;
+    }
+  } 
+} 
+.base_font {
+	font-family: $font;
+}
+
+.text-h5 {
+	font-family: $font;
+}
+
+.opacity-1 {
+	opacity: 1;
+}
+
+.opacity-0 {
+	opacity: 0;
+}
+
+.height-0 {
+	height: 0;
+}
+
+.w-100 {
+	width: 100%;
+}
+
+.v-btn {
+	letter-spacing: 0 !important;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.text-lg {
+	font-size: 17px;
+	font-weight: 500;
+}
+
+.text-xl {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.list_num {
+	list-style: persian;
+}
+
+.rules-title {
+	font-size: 2rem;
+	font-weight: bold;
+	color: #181f86;
+}
+
+.rules-sub {
+	font-size: 1.2rem;
+    font-weight: bold;
+    color: #181F86;
+}
+.row {
+  margin: 0 !important;
+}
+
+.font-0-5 {
+  font-size: .75rem;
+}
+
+.font-1 {
+  font-size: 1rem !important;
+}
+
+.font-2 {
+  font-size: 1.25rem  !important;
+}
+
+.font-3 {
+  font-size: 1.5rem  !important;
+}
+
+.font-4 {
+  font-size: 1.75rem  !important;
+}
+
+.font-5 {
+  font-size: 2rem  !important;
+}
+
+.font-6 {
+  font-size: 2.5rem  !important;
+}
+$font-default: 14px 'iranyekan' !important;
+$font-default-b: 14px 'iranyekan_b' !important;
+$font-default-1: 73% 'iranyekan' !important;
+$font-default-2: 77% 'iranyekan' !important;
+$font-default-3: 85% 'iranyekan' !important;
+$font-default-4: 90% 'iranyekan' !important;
+$font-default-5: 100% 'iranyekan' !important;
+
+@media only screen and (max-width: 1024px) {
+  html {
+    font: $font-default-1;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  html {
+    font: $font-default-2;
+  }
+}
+@media only screen and (min-width: 1224px) {
+  html {
+    font: $font-default-3;
+  }
+}
+@media only screen and (min-width: 1424px) {
+  html {
+    font: $font-default-5;
+  }
+}
+@media only screen and (min-width: 1624px) {
+  html {
+    font: $font-default-5;
+  }
+}
+@media only screen and (min-width: 1824px) {
+  html {
+    font: $font-default-5;
+  }
+}
+

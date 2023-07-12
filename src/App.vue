@@ -1,30 +1,23 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="app" dir="rtl">
+    <!-- <div>
+      <router-link to=""> about</routerLink>
+      <router-link to="about"> about</routerLink>
+    </div> -->
+    <RouterView></RouterView>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { ref } from 'vue'
 
-nav {
-  padding: 30px;
-}
+export default {
+  name: 'LayoutDefault',
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  setup () {
+    return {
+      leftDrawerOpen: ref(false)
+    }
+  }
 }
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>

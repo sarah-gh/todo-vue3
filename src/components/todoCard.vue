@@ -1,14 +1,16 @@
 <template>
   <div class="card mb-3 p-3 rounded shadow todo-card" >
     <TodoForm @add="addTodo" v-if="showEditForm" :initialValues="initialValues"/>
-    <div v-if="!showEditForm">
-      <h3 class="text-lg todo-title">عنوان : {{ todo.title }}</h3>
-      <p class="todo-description">توضیحات : {{ todo.description }}</p>
-      <p class="todo-due-date">تاریخ سررسید : {{ todo.dueDate }}</p>
-      <p class="todo-priority">اولویت : {{ todo.priority }}</p>
-      <div class="todo-actions d-flex">
-        <button class="btn btn-primary" @click="editTodo">ویرایش</button>
-        <button class="btn btn-danger" @click="deleteTodo">حذف</button>
+    <div class="d-flex justify-content-between w-100" v-if="!showEditForm">
+      <div class="todo-content">
+        <h3 class="text-lg todo-title">عنوان : {{ todo.title }}</h3>
+        <p class="todo-description">توضیحات : {{ todo.description }}</p>
+        <p class="todo-due-date">تاریخ سررسید : {{ todo.dueDate }}</p>
+        <p class="todo-priority">اولویت : {{ todo.priority }}</p>
+      </div>
+      <div class="todo-actions">
+        <button class="btn btn-outline-primary" @click="editTodo">ویرایش</button>
+        <button class="btn btn-outline-danger" @click="deleteTodo">حذف</button>
       </div>
     </div>
   </div>
@@ -74,6 +76,10 @@ export default {
   direction: rtl;
 }
 
+.todo-content {
+  flex-grow: 1;
+  width: 100%;
+}
 .todo-title {
   margin: 0 0 0.3rem;
   font-size: 1.3rem;
@@ -91,15 +97,21 @@ export default {
 }
 
 .btn {
-  height: 2.5rem;
+  height: 1.8rem;
+  width: 65px;
+  font-size: 0.8rem;
   margin-bottom: 0 !important;
 }
 
 .todo-actions {
-  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 0.5rem !important;
+  width: fit-content;
 }
 
-.todo-actions button {
-  margin-right: 0.5rem;
+.todo-actions .btn {
+  margin-bottom: 0.5rem !important;
 }
 </style>

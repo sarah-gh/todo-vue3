@@ -50,3 +50,9 @@ export const useTodoStore = defineStore('todo', {
     }
   }
 })
+
+export const useTheme = defineStore('theme', {
+  state: () => ({
+    theme: 'light'
+  })
+})

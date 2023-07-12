@@ -1,12 +1,19 @@
 <template>
     <div class="todo-list card my-4 p-1 rounded mx-2">
       <TodoForm @add="addTodo" v-if="showForm" />
-      <button type="button" class="btn btn-primary mt-3 mx-auto" @click="addForm">
-        ایجاد کار جدید
-      </button>
-      <h3 class="text-lg todo-title">عنوان : {{ todos.title }}</h3>
-      <p class="todo-description">توضیحات : {{ todos.description }}</p>
-      <p class="todo-due-date">تاریخ ایجاد : {{ todos.date }}</p>
+      <div class="px-2">
+        <div class="d-flex mt-3 ">
+          <button type="button" class="btn btn-primary" @click="addForm">
+            ایجاد کار جدید
+          </button>
+          <router-link :to="{name: 'todo', query: {id: index}}" class="btn btn-info mx-2">مشاهده</router-link>
+
+        </div>
+
+        <h3 class="text-lg todo-title">عنوان : {{ todos.title }}</h3>
+        <p class="todo-description">توضیحات : {{ todos.description }}</p>
+        <p class="todo-due-date">تاریخ ایجاد : {{ todos.date }}</p>
+      </div>
       <div class="mt-3 mx-0 px-0">
           <TodoCard v-for="(todo, index) in todos.todos" :key="index"
           :todo="todo" @delete="deleteTodo(index)" class="mt-3 mx-3" />
@@ -39,6 +46,10 @@ export default {
     const todoStore = useTodoStore()
     const showForm = ref(false)
 
+    const show = () => {
+
+    }
+
     const deleteTodo = (index) => {
       // emit('deleteTodo', index)
     }
@@ -53,6 +64,7 @@ export default {
     }
 
     return {
+      show,
       deleteTodo,
       addForm,
       showForm,
@@ -89,6 +101,9 @@ export default {
   &::-webkit-scrollbar-thumb:hover {
     background: #949494;
     border-radius: 10px;
+  }
+  .btn {
+    max-height: 40px;
   }
   .form-group {
     width: 40% ;

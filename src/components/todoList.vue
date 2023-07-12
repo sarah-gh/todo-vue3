@@ -16,7 +16,7 @@
       </div>
       <div class="mt-3 mx-0 px-0">
           <TodoCard v-for="(todo, index) in todos.todos" :key="index"
-          :todo="todo" @delete="deleteTodo(index)" class="mt-3 mx-3" />
+          :todo="todo" @deleteTodo="deleteTodo(index)" @editTodo="editTodo(index)" class="mt-3 mx-3" />
       </div>
     </div>
 </template>
@@ -44,6 +44,7 @@ export default {
   emits: ['addTodo', 'deleteTodo'],
   setup (props, { emit }) {
     const todoStore = useTodoStore()
+    // const todos = ref(todoStore.list[props.index])
     const showForm = ref(false)
 
     const show = () => {
@@ -51,7 +52,12 @@ export default {
     }
 
     const deleteTodo = (index) => {
-      // emit('deleteTodo', index)
+      todoStore.deleteTodo(props.index, index)
+      emit('deleteTodo')
+    }
+
+    const editTodo = (index) => {
+
     }
 
     const addForm = () => {
@@ -66,6 +72,7 @@ export default {
     return {
       show,
       deleteTodo,
+      editTodo,
       addForm,
       showForm,
       addTodo

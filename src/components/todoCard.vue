@@ -16,17 +16,23 @@
 export default {
   name: 'todoCard',
   props: {
+    index: {
+      type: Number
+    },
     todo: {
       type: Object,
       required: true
     }
   },
-  setup (props) {
+  emits: ['editTodo', 'deleteTodo'],
+  setup (props, { emit }) {
     const editTodo = () => {
+      emit(editTodo, props.index)
       // عملیات ویرایش کار
     }
 
     const deleteTodo = () => {
+      emit('deleteTodo', props.index)
       // عملیات حذف کار
     }
 

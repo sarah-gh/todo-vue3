@@ -31,19 +31,14 @@ export const useTodoStore = defineStore('todo', {
   }),
   actions: {
     addTodo (todo, index) {
-      // if (this.list[index] && this.list[index].length > 0) {
       this.list[index].todos.push(todo)
-      // } else {
-      //   this.list[index].todos = []
-      //   this.list[index].todos.push(todo)
-      // }
-      // this.todos.push(todo)
     },
     addList (list) {
       this.list.push(list)
     },
-    deleteTodo (index) {
-      // this.todos.splice(index, 1)
+    deleteTodo (indexList, indexTodo) {
+      console.log(indexList, indexTodo)
+      this.list[indexList].todos.splice(indexTodo, 1)
     },
     editTodo (index, updatedTodo) {
       // this.todos.splice(index, 1, updatedTodo)

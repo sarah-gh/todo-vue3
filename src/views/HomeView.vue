@@ -35,13 +35,10 @@
         </Field>
       </div>
 
-      <!-- <div class="form-group mt-3 mx-0 mx-md-4">
-        <label> جستجو :</label>
-        <Field v-model="search" name="description" type="text" class="form-control" />
-      </div> -->
     </div>
     <div class="d-flex scroll-lists" style="overflow-x: auto;">
-      <todoList v-for="(todo, index) in todos" :key="index+'-todos'" :index="index" :todos="todo"></todoList>
+      <todoList v-for="(todo, index) in todos" :key="'todos-'+index"
+      @deleteTodo="deleteTodo" :index="index" :todos="todo"></todoList>
     </div>
   </div>
 </template>
@@ -66,7 +63,7 @@ export default {
     const selectList = ref('')
     const filter = ref('')
     const search = ref('')
-    const todos = ref(JSON.parse(JSON.stringify(todoStore.list)))
+    const todos = ref(todoStore.list)
 
     const addList = (todo) => {
       todoStore.addList(todo)
@@ -77,19 +74,10 @@ export default {
       showForm.value = !showForm.value
     }
 
-    const deleteTodo = (index) => {
-      todoStore.deleteTodo(index)
+    const deleteTodo = () => {
+      // todos.value = ref(JSON.parse(JSON.stringify(todoStore.list)))
     }
 
-    // const filteredTodosPriority = () => {
-    //   const index = selectList.value.split('-')[1]
-    //   if (filterItem.value && todoStore.list[index].todos) {
-    //     console.log(todoStore.list[index], filter.value, todoStore.list[index].todos)
-    //     return todoStore.list[index].todos.filter(
-    //       todo => todo[filter.value] === filterItem.value || todo[filter.value].includes(filterItem.value)
-    //     )
-    //   } else return todoStore.list[index]
-    // }
     const filteredTodosPriority = () => {
       const index = selectList.value.split('-')[1]
       if (filterItem.value && todoStore.list[index].todos) {
@@ -109,7 +97,7 @@ export default {
         console.log('selectList.value', selectList.value, [todoStore.list[index]])
         todos.value = JSON.parse(JSON.stringify([todoStore.list[index]]))
       } else {
-        todos.value = JSON.parse(JSON.stringify(todoStore.list))
+        todos.value = todoStore.list
       }
     })
 
